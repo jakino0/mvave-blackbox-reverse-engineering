@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Vendor and user-supplied artifacts must never be committed.
+*.apk
+*.bin
+*.fwsc
+*.ufw
+*.img
+*.log
+*.pdf
+
+# Analysis output and local workspaces.
+artifacts/
+private/
+work/
+*.openai-download-*
