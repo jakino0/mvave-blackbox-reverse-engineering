@@ -40,3 +40,10 @@ previous `+0x14` translation or simple CRC-corruption theories.
 Do not flash the version-only package or any diagnostic firmware prepared
 during this investigation. Recovery and rollback have not been established,
 and an official firmware update may supersede V20.
+
+Analysis of the OTA stage suggests that the loader is moved into SRAM before
+the main update operation. That is not a usable snapshot of the running audio
+application: its SRAM area overlaps live application structures. More
+importantly, there is still no demonstrated BlackBox recovery entry that works
+when the normal application cannot boot. The recovery gate remains open; a
+diagnostic firmware change is an offline idea only, not a validated device test.

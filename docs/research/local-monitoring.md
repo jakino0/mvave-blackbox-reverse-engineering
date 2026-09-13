@@ -23,12 +23,15 @@ engineering project. It does not define the scope of the repository.
 | EP `0x02 OUT` is playback and EP `0x83 IN` is capture | Verified | UAC descriptors at app `0x5C3F0` and `0x5C424` |
 | Both UAC streams are stereo, 24-bit, 44.1 kHz | Verified | Descriptor bytes and host ALSA observation |
 | `0x425B6` is a shared per-instance feeder | Strong inference | Multiple call sites and argument flow |
-| LIST_A holds output-side per-instance objects | Strong inference | Traversal, insertion, and per-object ioctl pattern |
-| One LIST_A entry is the local-DSP contributor | Hypothesis | Fits topology; runtime handle identity is still missing |
+| LIST_A is an output-side client list | Rejected | Task-creation decode associates its worker with `audio_encoder` |
+| One LIST_A entry is the local-DSP contributor | Rejected as an assumption | Encoder-task association provides no local-output identity |
 | `0x40530` dispatches per-object opcodes 1, 2, and 4 | Verified | Opcode comparisons and object field accesses in the instruction stream |
 | Opcode 1 adds `object+0x24`; opcode 2 removes it | Verified | Calls to decoded list helpers `0x40122` and `0x40192` |
 | `0x40192` is a safe monitor-off primitive | Rejected | It may only update bookkeeping after the real detach |
-| `0x42C2A` registers both `0x40530` and `0x41EC6` | Verified | Callback materializations and two direct registrar call sites |
+| `0x40530` / `0x41EC6` are task entries for `audio_encoder` / `audio_server` | Strong inference | Corrected call decode and task-name table |
+| The shared call is a per-client event registrar | Rejected | Corrected task-creation decode |
+| DAC renderer `0x4A698` walks a separate client list at `0x01C0DC3C` | Verified in binary | List traversal and per-client PCM callback call |
+| Stock `DEV` reads reveal the DAC client list | Rejected | Defined bounded families do not cover its address |
 | CMD05/06/07 already operate on LIST_A's `object+0x14` | Rejected | No static site combines those commands with that concrete field access |
 | First LIST_A entry has stable meaning | Rejected | Insertion is push-front |
 | Global DAC/I2S or UAC speaker mute solves the target | Rejected | Would also cut USB playback |
@@ -36,7 +39,9 @@ engineering project. It does not define the scope of the repository.
 
 ## Current model
 
-`LIST_A` is a circular intrusive list at runtime address `0x01C0BBF4`.
+`LIST_A` is a circular intrusive list at runtime address `0x01C0BBF4`
+used by the `audio_encoder` task. Its connection to the desired local-output
+path is not established.
 
 ```text
 node = object + 0x24
@@ -69,20 +74,11 @@ This pseudocode records observed data flow; the semantic names of opcode 4 and
 
 ## Immediate next target
 
-Find the producer of the event consumed by `0x40530`, especially the path that
-emits opcode 2 with a concrete object. In parallel, identify the runtime handles
-and minimal metadata for each active LIST_A entry without changing flash:
-
-```text
-ENTRY0 -> object+0x14, metadata +0x00/+0x01/+0x02/+0x32
-ENTRY1 -> object+0x14, metadata +0x00/+0x01/+0x02/+0x32
-ENTRY2 -> object+0x14, metadata +0x00/+0x01/+0x02/+0x32
-```
-
-Then run a differential observation with USB playback active/inactive to label
-the relevant instances. Only after the local-DSP object is identified should
-the native event producer or another per-instance stop, detach, unlink, or
-ioctl path be considered. Do not call `0x40192` directly as an audio stop.
+Identify the active clients of the separate DAC renderer. A controlled
+comparison with and without USB playback could help distinguish contributors
+if a safe observation route is found. Stock `DEV` reads cannot inspect those
+client records. No selective control has been verified. Do not call `0x40192`
+as an audio stop.
 
 ## Closed or paused leads
 

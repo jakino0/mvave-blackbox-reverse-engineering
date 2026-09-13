@@ -31,7 +31,20 @@ real CMD07 sites. No static CMD05/06/07 site uses the same `object + 0x14`
 access employed by LIST_A's CMD03 path. These commands remain lifecycle
 candidates, not established controls for the local-DSP instance.
 
-## LIST_A iteration
+## `audio_encoder` task and LIST_A
+
+Re-decoding the task creation sites identifies `0x40530` as the entry point
+associated with the firmware's `audio_encoder` task name, and `0x41EC6` with
+`audio_server`. The task-name table provides an independent string reference.
+The earlier interpretation of the shared call as a per-client event registrar
+was incorrect: it creates these tasks. `audio_server` is not yet classified as
+playback-only; its work includes other audio requests.
+
+LIST_A is used by the `audio_encoder` task. Its exact per-object semantics
+remain under investigation; it must not be assumed to enumerate local output
+or USB-return contributors.
+
+### LIST_A iteration
 
 The list head is at runtime `0x01C0BBF4`. Observed iteration:
 
@@ -82,13 +95,17 @@ proves that LIST_A has per-object add/remove lifecycle handling. It does not
 prove that invoking the list helper directly stops audio; removal may only be
 bookkeeping after an earlier detach operation.
 
-The callback pointer for `0x40530` is registered at `0x40318` through
-`0x42C2A` (not `0x2C2A`, as an earlier decode stated). The same registrar is
-used at `0x407B8` for callback `0x41EC6`, supporting a shared event mechanism.
+## DAC client structure
+
+Separate from LIST_A, the DAC renderer at application offset `0x4A698`
+traverses a client list headed at runtime `0x01C0DC3C`. Its per-client node
+contains an endpoint, private context, and a PCM callback. This establishes a
+per-client render mechanism; the identity of each active contributor has not
+been observed on the device. The stock bounded `DEV` reader does not expose
+this list.
 
 ## Safety conclusion
 
-Do not patch the walker, CMD03, the list-removal helper, or the first list entry
-globally. The useful next result is the producer of opcode-2 events and a
-runtime identity map for the local-DSP object. Only then can the native detach
-or release path be assessed safely.
+Neither LIST_A nor an arbitrary DAC client may be treated as the local-DSP
+contributor without device-side identification. No selective detach or safe
+firmware diagnostic procedure has been demonstrated.

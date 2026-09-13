@@ -46,10 +46,11 @@ and independently reproduced results become available.
 - USB Audio endpoint `0x02 OUT` carries host-to-device playback and endpoint
   `0x83 IN` carries device-to-host capture. Both descriptors specify stereo,
   24-bit, 44.1 kHz audio.
-- An output-side runtime object family uses intrusive `LIST_A`, per-object
-  handles, and event opcodes for add, remove, and state change.
-- Callbacks at application offsets `0x40530` and `0x41EC6` are registered
-  through the shared primitive at `0x42C2A`.
+- Task entries at application offsets `0x40530` and `0x41EC6` are associated
+  with `audio_encoder` and `audio_server`, respectively. The former uses
+  intrusive `LIST_A`; the DAC renderer uses a separate per-client list.
+- V20 `DEV` reads expose specific bounded families, including a patch snapshot
+  and a one-byte Computer Loopback state. They do not expose arbitrary SRAM.
 - BLE and USB expose related M-EFCS messaging through different transports;
   observed commands do not yet provide a complete control map.
 - OTA/updater behavior has been partially characterized, but no recovery-safe
@@ -64,7 +65,7 @@ inferences, hypotheses, and rejected interpretations.
 | Area | Current coverage | Status |
 | --- | --- | --- |
 | Firmware V20 | Image landmarks, offsets, runtime translation | Documented; expanding |
-| Runtime architecture | Objects, handles, callbacks, lists, event lifecycle | Partially reconstructed |
+| Runtime architecture | Task identities, objects, bounded DEV reads, DAC clients | Partially reconstructed |
 | USB Audio | Endpoint direction, descriptors, formats, host observations | Core facts verified |
 | BLE/M-EFCS | Framing, transport behavior, selected commands and memory spaces | Partial protocol map |
 | OTA/updater | Package and desktop-updater observations | Experimental; not recovery-safe |
