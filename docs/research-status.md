@@ -6,7 +6,7 @@ This page summarizes findings reviewed for the public V20 documentation.
 
 | Area | Established baseline | Open work |
 | --- | --- | --- |
-| Firmware V20 | Image landmarks and application/runtime translation | Broader function classification and future-version comparison |
+| Firmware V20 | Whole-image PI32v2 pass, 94.2426% byte coverage, calls, candidate entries, strings, pointers, gaps | Indirect callbacks, data/code review, semantic naming, future-version comparison |
 | Runtime architecture | Task identities, device objects, bounded DEV reads, and intrusive-list structures | Semantic identity of active DAC clients |
 | USB Audio | Playback/capture endpoint direction and 24-bit/44.1 kHz descriptors | Internal producer/consumer mapping and runtime state |
 | BLE/M-EFCS | Transport framing, bounded DEV reader families, controlled device reads | Complete command semantics and safe runtime capabilities |
@@ -23,6 +23,7 @@ This page summarizes findings reviewed for the public V20 documentation.
 | M-EFCS command map | Active | Separate verified device behavior from APK-level naming |
 | Selective local monitoring | Open; no safe control found | [Dedicated research note](research/local-monitoring.md) |
 | OTA/recovery | Paused for safety | No demonstrated recovery entry independent of a bootable application |
+| Firmware semantic map | Active | Convert mechanical `FUN_...` entries into evidence-backed subsystem and function identities |
 
 ## Evidence policy
 

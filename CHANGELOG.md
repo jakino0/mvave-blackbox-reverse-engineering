@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added a reproducible whole-image V20 PI32v2 structural map with function
+  partitions, direct-call relationships, strings, pointer candidates, decoder
+  gaps, reviewed landmarks, and conservative toolchain-library matches.
+- Corrected the `audio_dev` immediate-load boundary from the interior address
+  `0x4332A` to the actual instruction start at `0x43328`.
+
 - Initial public-safe repository structure.
 - Added V20 memory map, USB Audio findings, `audio_dev` landmarks, LIST_A status,
   M-EFCS notes, OTA observations, and read-only inspection tools.

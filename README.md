@@ -26,6 +26,8 @@ and independently reproduced results become available.
   open questions across the project.
 - [V20 address map](docs/address-map-v20.md): image landmarks and application to
   runtime address translation.
+- [Complete V20 structural map](docs/firmware-map-v20.md): whole-image decoder
+  coverage, generated call map, strings, pointers, and remaining semantic work.
 - [`audio_dev` and runtime lists](docs/audio-dev-and-lists.md): device objects,
   handles, callbacks, and intrusive-list lifecycle.
 - [USB Audio](docs/usb-audio.md): playback/capture endpoints and formats.
@@ -41,8 +43,12 @@ and independently reproduced results become available.
 
 - V20 application offsets map to runtime addresses with
   `runtime = app_offset + 0x02000120`.
+- The V20 image has a reproducible whole-image structural map: 222,490 decoded
+  instructions cover 94.2426% of 655,712 bytes, with 2,167 candidate function
+  entries and 12,152 resolved direct call sites.
 - The `audio_dev` string is at application offset `0x5BC1A` (runtime
-  `0x0205BD3A`) with one identified code reference at `0x4332A`.
+  `0x0205BD3A`). Its immediate load begins at `0x43328`; `0x4332A` lies inside
+  that six-byte instruction and is not an instruction boundary.
 - USB Audio endpoint `0x02 OUT` carries host-to-device playback and endpoint
   `0x83 IN` carries device-to-host capture. Both descriptors specify stereo,
   24-bit, 44.1 kHz audio.
@@ -64,7 +70,7 @@ inferences, hypotheses, and rejected interpretations.
 
 | Area | Current coverage | Status |
 | --- | --- | --- |
-| Firmware V20 | Image landmarks, offsets, runtime translation | Documented; expanding |
+| Firmware V20 | Whole-image structural pass, calls, strings, pointers, gaps, reviewed landmarks | Structurally mapped; semantic naming active |
 | Runtime architecture | Task identities, objects, bounded DEV reads, DAC clients | Partially reconstructed |
 | USB Audio | Endpoint direction, descriptors, formats, host observations | Core facts verified |
 | BLE/M-EFCS | Framing, transport behavior, selected commands and memory spaces | Partial protocol map |
@@ -83,6 +89,7 @@ defining the scope of the repository.
 | Path | Purpose |
 | --- | --- |
 | `docs/` | Architecture, protocol notes, research threads, and status |
+| `analysis/v20/` | Reviewed seeds and generated non-byte-bearing structural map |
 | `tools/` | Read-only firmware inspection utilities |
 | `tests/` | Synthetic tests containing no vendor data |
 
@@ -100,6 +107,9 @@ python3 tools/check_repo.py
 The inspector never writes to the input image. It reports hashes, known ASCII
 landmarks, USB Audio endpoint descriptors, and application/runtime address
 translations.
+
+The full mapping pipeline and the required local-only PI32v2 decoder workflow
+are documented in [`analysis/v20/README.md`](analysis/v20/README.md).
 
 ## Evidence policy
 

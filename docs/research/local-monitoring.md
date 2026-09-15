@@ -19,7 +19,7 @@ engineering project. It does not define the scope of the repository.
 | USB playback remains audible at MASTER=0 | Verified experimentally | Drum-loop test |
 | MASTER=0 also removes usable input/capture to the host app | Verified experimentally | G-Core/NAM test |
 | Application runtime base is `0x02000120` | Verified | Image/header analysis and address consistency |
-| `audio_dev` at app `0x5BC1A`, unique code xref `0x4332A` | Verified | Direct byte/string and code-reference analysis |
+| `audio_dev` at app `0x5BC1A`, immediate load at `0x43328` | Verified | Direct string and instruction-boundary analysis |
 | EP `0x02 OUT` is playback and EP `0x83 IN` is capture | Verified | UAC descriptors at app `0x5C3F0` and `0x5C424` |
 | Both UAC streams are stereo, 24-bit, 44.1 kHz | Verified | Descriptor bytes and host ALSA observation |
 | `0x425B6` is a shared per-instance feeder | Strong inference | Multiple call sites and argument flow |

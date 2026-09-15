@@ -3,8 +3,10 @@
 ## `audio_dev` anchor
 
 The ASCII string `audio_dev` occurs at application offset `0x5BC1A`. The
-identified code reference is at `0x4332A`, in the device creation/configuration
-area. Nearby direct calls include:
+identified immediate load starts at `0x43328`, in the device
+creation/configuration area. It is a six-byte instruction; `0x4332A` is inside
+that instruction and must not be used as a disassembly entry point. Nearby
+direct calls include:
 
 ```text
 0x433A2 -> 0x3DF5A

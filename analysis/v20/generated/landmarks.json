@@ -1,0 +1,194 @@
+{
+  "symbols": [
+    {
+      "kind": "function",
+      "name": "reset_entry",
+      "confidence": "verified",
+      "tags": [
+        "boot"
+      ],
+      "note": "First decoded application instruction.",
+      "runtime": "0x02000120",
+      "offset": "0x0"
+    },
+    {
+      "kind": "function",
+      "name": "object_command_dispatcher",
+      "confidence": "strong-inference",
+      "tags": [
+        "audio"
+      ],
+      "note": "Reached by reviewed CMD02/CMD03/CMD05/CMD06/CMD07 sites.",
+      "runtime": "0x0200598C",
+      "offset": "0x586C"
+    },
+    {
+      "kind": "function",
+      "name": "FUN_0203E07A_audio_dev_anchor_callee",
+      "confidence": "verified-location",
+      "tags": [
+        "audio"
+      ],
+      "note": "Direct callee near the audio_dev construction sites; exact semantics unresolved.",
+      "runtime": "0x0203E07A",
+      "offset": "0x3DF5A"
+    },
+    {
+      "kind": "function",
+      "name": "intrusive_list_add_after",
+      "confidence": "verified",
+      "tags": [
+        "runtime"
+      ],
+      "note": "Conventional intrusive-list insertion.",
+      "runtime": "0x02040242",
+      "offset": "0x40122"
+    },
+    {
+      "kind": "function",
+      "name": "intrusive_list_remove",
+      "confidence": "verified",
+      "tags": [
+        "runtime"
+      ],
+      "note": "Repairs adjacent links and self-links the removed node.",
+      "runtime": "0x020402B2",
+      "offset": "0x40192"
+    },
+    {
+      "kind": "function",
+      "name": "audio_encoder_task_entry",
+      "confidence": "verified",
+      "tags": [
+        "audio",
+        "task"
+      ],
+      "note": "Task-name table and creation site identify audio_encoder.",
+      "runtime": "0x02040650",
+      "offset": "0x40530"
+    },
+    {
+      "kind": "location",
+      "name": "audio_encoder_cmd03_location",
+      "confidence": "verified-location",
+      "tags": [
+        "audio"
+      ],
+      "note": "CMD03 construction point inside audio_encoder.",
+      "runtime": "0x020406F4",
+      "offset": "0x405D4"
+    },
+    {
+      "kind": "function",
+      "name": "audio_server_task_entry",
+      "confidence": "verified",
+      "tags": [
+        "audio",
+        "task"
+      ],
+      "note": "Task-name table and creation site identify audio_server.",
+      "runtime": "0x02041FE6",
+      "offset": "0x41EC6"
+    },
+    {
+      "kind": "function",
+      "name": "graph_splice_relink_candidate",
+      "confidence": "strong-inference",
+      "tags": [
+        "audio",
+        "runtime"
+      ],
+      "note": "Graph relinking role supported; exact semantics incomplete.",
+      "runtime": "0x020431AA",
+      "offset": "0x4308A"
+    },
+    {
+      "kind": "location",
+      "name": "audio_dev_string_load",
+      "confidence": "verified",
+      "tags": [
+        "audio"
+      ],
+      "note": "Six-byte immediate load of runtime 0x0205BD3A; 0x4332A lies inside the instruction.",
+      "runtime": "0x02043448",
+      "offset": "0x43328"
+    },
+    {
+      "kind": "function",
+      "name": "dac_client_renderer",
+      "confidence": "verified-location",
+      "tags": [
+        "audio",
+        "dac"
+      ],
+      "note": "Traverses the DAC client list headed at runtime 0x01C0DC3C.",
+      "runtime": "0x0204A7B8",
+      "offset": "0x4A698"
+    },
+    {
+      "kind": "data",
+      "name": "i2s_output_transport_descriptor",
+      "confidence": "strong-inference",
+      "tags": [
+        "audio",
+        "i2s"
+      ],
+      "runtime": "0x0205B8AC",
+      "offset": "0x5B78C"
+    },
+    {
+      "kind": "data",
+      "name": "dac_descriptor",
+      "confidence": "strong-inference",
+      "tags": [
+        "audio",
+        "dac"
+      ],
+      "runtime": "0x0205B8D8",
+      "offset": "0x5B7B8"
+    },
+    {
+      "kind": "data",
+      "name": "mic_input_shared_descriptor",
+      "confidence": "strong-inference",
+      "tags": [
+        "audio",
+        "mic"
+      ],
+      "runtime": "0x0205B91C",
+      "offset": "0x5B7FC"
+    },
+    {
+      "kind": "string",
+      "name": "audio_dev_string",
+      "confidence": "verified",
+      "tags": [
+        "audio"
+      ],
+      "runtime": "0x0205BD3A",
+      "offset": "0x5BC1A"
+    },
+    {
+      "kind": "data",
+      "name": "usb_endpoint_02_descriptor",
+      "confidence": "verified",
+      "tags": [
+        "usb",
+        "audio"
+      ],
+      "runtime": "0x0205C510",
+      "offset": "0x5C3F0"
+    },
+    {
+      "kind": "data",
+      "name": "usb_endpoint_83_descriptor",
+      "confidence": "verified",
+      "tags": [
+        "usb",
+        "audio"
+      ],
+      "runtime": "0x0205C544",
+      "offset": "0x5C424"
+    }
+  ]
+}

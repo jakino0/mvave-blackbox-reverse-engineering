@@ -18,7 +18,7 @@ application_offset = runtime - 0x02000120
 | LIST_A walker | `0x40530` | `0x02040650` | Verified code location |
 | Per-instance CMD03 point | `0x405D4` | `0x020406F4` | Verified code location |
 | Graph splice/relink routine | `0x4308A` | `0x020431AA` | Strong inference |
-| `audio_dev` xref | `0x4332A` | `0x0204344A` | Verified |
+| `audio_dev` immediate load | `0x43328` | `0x02043448` | Verified instruction boundary |
 | `audio_dev` string | `0x5BC1A` | `0x0205BD3A` | Verified |
 | DAC descriptor | `0x5B7B8` | `0x0205B8D8` | Strong inference |
 | I2S/output transport descriptor | `0x5B78C` | `0x0205B8AC` | Strong inference |
@@ -57,3 +57,7 @@ target = instruction_offset + 4 + signed(imm16) * 2
 
 These formulas must be applied only after instruction boundaries are known.
 Scanning for byte prefixes alone can produce false positives.
+
+The generated [whole-image structural map](firmware-map-v20.md) extends this
+reviewed landmark table with all resolved direct calls, candidate entries,
+strings, pointer targets, and decoder gaps.

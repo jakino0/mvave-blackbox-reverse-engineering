@@ -12,9 +12,20 @@ venv/
 *.img
 *.log
 *.pdf
+*.exe
+*.zip
+*.tar
+*.tar.gz
+*.tar.xz
+*.o
+*.a
+*.so
+*.dex
 
 # Analysis output and local workspaces.
 artifacts/
 private/
 work/
+reference/
+analysis/v20/disassembly/
 *.openai-download-*

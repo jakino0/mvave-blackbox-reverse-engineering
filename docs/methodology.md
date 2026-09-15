@@ -10,6 +10,19 @@
 6. Prefer differential, read-only runtime observations.
 7. Reject a candidate that cannot preserve both required USB paths.
 
+## Whole-image mapping
+
+The V20 workflow wraps the flat application image in a temporary ELF32-pi32v2
+section and invokes the official JieLi objdump. The wrapper changes neither the
+input bytes nor their offsets. A second tool converts the local byte-bearing
+listing into a public structural map containing addresses and relationships.
+
+The map uses direct-call targets as mechanical entry evidence. This gives broad
+coverage without pretending that every boundary or function identity is known.
+Indirect calls, mixed data/code areas, and decoder gaps are retained as explicit
+open work. Exact toolchain-library signatures provide conservative names for a
+small set of standard routines.
+
 ## Safe experiment design
 
 A useful local-monitor experiment changes one variable while checking all three

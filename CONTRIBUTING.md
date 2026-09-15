@@ -20,13 +20,18 @@ if it cannot be reproduced safely.
 
 - firmware, decrypted application images, updater packages, or APKs;
 - modified flashable images;
-- full application disassembly or vendor source dumps;
+- full application disassembly, instruction-byte exports, vendor source, or
+  toolchain dumps;
 - device serial numbers, MAC addresses, credentials, or personal paths;
 - private notes or logs that have not been reviewed and redacted.
 
 Small byte sequences needed to identify a standard descriptor or explain an
 instruction encoding are acceptable when they are necessary for commentary and
 interoperability research.
+
+Derived maps may contain addresses, names, counts, call relationships, and
+string references. They must omit instruction bytes and enough ordered content
+to reconstruct the original application image.
 
 ## Finding format
 
